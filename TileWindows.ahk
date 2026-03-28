@@ -17,7 +17,7 @@ GetVisibleWindows() {
             continue
         if !(style & 0x10000000) ; WS_VISIBLE
             continue
-        if (title = "Program Manager" || title = "Windows Input Experience" || title = "NVIDIA GeForce Overlay" || title = "Picture in Picture" || SubStr(title, 1, 6) = "Meet -")
+        if (title = "Program Manager" || title = "Windows Input Experience" || title = "NVIDIA GeForce Overlay" || title = "Picture in Picture" || SubStr(title, 1, 6) = "Meet -" || SubStr(title, 1, 3) = "OBS" || title = "PowerDock")
             continue
         windows.Push(hwnd)
     }
