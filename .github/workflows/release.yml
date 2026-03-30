@@ -1,0 +1,37 @@
+name: Release on Push to Main
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compute version
+        id: version
+        run: |
+          COUNT=$(git rev-list --count HEAD)
+          MINOR=$((COUNT - 1))
+          VERSION="v1.${MINOR}"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          name: ${{ steps.version.outputs.version }}
+          generate_release_notes: true
+          files: |
+            TileWindows.ahk
+            debug_windows.ahk
